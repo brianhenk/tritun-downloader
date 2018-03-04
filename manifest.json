@@ -1,0 +1,47 @@
+{
+  "manifest_version": 2,
+  "name": "TriTun Downloader",
+  "author": "Brian Henk",
+  "version": "1.0",
+  "description": "Allows you to download all files displayed on a TriTun page.",
+
+  "applications": {
+    "gecko": {
+      "strict_min_version": "59.0"
+    }
+  },
+
+  "permissions": [
+    "https://www.tritun.net/tritun/*",
+    "downloads",
+    "activeTab",
+    "alarms"
+  ],
+
+  "background": {
+    "scripts": [ "background.js" ]
+  },
+
+  "page_action": {
+    "browser_style": true,
+    "default_icon": "download.svg",
+    "default_title": "Download All",
+    "default_popup": "popup.html",
+    "show_matches": ["https://www.tritun.net/tritun/content/document/view*"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.tritun.net/tritun/service/document/*"],
+      "all_frames": true,
+      "js": ["finder-service-document.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.tritun.net/tritun/content/document/view*"],
+      "js": ["finder-content-document.js"],
+      "run_at": "document_idle"
+    }
+  ]
+
+}
