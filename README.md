@@ -1,2 +1,2 @@
-# tritun-downloader
-Firefox extension for downloading files from TriTun
+# TriTun Downloader
+Firefox add-on that allows you to download all files displayed on a TriTun page.
