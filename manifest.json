@@ -24,9 +24,9 @@
 
   "page_action": {
     "browser_style": true,
-    "default_icon": "download.svg",
+    "default_icon": "page-action/download.svg",
     "default_title": "Download All",
-    "default_popup": "popup.html",
+    "default_popup": "page-action/popup.html",
     "show_matches": ["https://www.tritun.net/tritun/content/document/view*"]
   },
 
@@ -34,12 +34,12 @@
     {
       "matches": ["https://www.tritun.net/tritun/service/document/*"],
       "all_frames": true,
-      "js": ["finder-service-document.js"],
+      "js": ["link-finder/service-document.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["https://www.tritun.net/tritun/content/document/view*"],
-      "js": ["finder-content-document.js"],
+      "js": ["link-finder/content-document.js"],
       "run_at": "document_idle"
     }
   ]
