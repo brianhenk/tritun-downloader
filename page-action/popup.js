@@ -3,9 +3,10 @@ function logError(error) {
 }
 
 let doc = {};
+let activeTab;
 
 browser.tabs.query({active: true}).then((tabs) => {
-    let activeTab = tabs[0];
+    activeTab = tabs[0];
 
     browser.runtime.sendMessage({ tabId: activeTab.id, subject: "get-document" }).then((docMessage) => {
         doc = docMessage;
@@ -13,10 +14,7 @@ browser.tabs.query({active: true}).then((tabs) => {
         let titleSpan = document.getElementById("title");
         titleSpan.textContent = doc.title;
 
-        let fileCountSpan = document.getElementById("file-count");
-        fileCountSpan.textContent = doc.pdfFiles.length;
-
-        let fileListElement = document.getElementById("file-list");
+        let fileListElement = document.getElementById("pdf-file-list");
         while (fileListElement.firstChild) {
             fileListElement.removeChild(fileListElement.firstChild);
         }
@@ -26,19 +24,23 @@ browser.tabs.query({active: true}).then((tabs) => {
             fileListElement.appendChild(li);
         }
 
-        let noFilesDiv = document.getElementById("no-files");
-        let hasFilesDiv = document.getElementById("has-files");
+        let hasPDFFilesDiv = document.getElementById("has-pdf-files");
         if(doc.pdfFiles.length > 0) {
-            noFilesDiv.setAttribute("style", "display: none;");
-            hasFilesDiv.setAttribute("style", "display: block;");
+            hasPDFFilesDiv.setAttribute("style", "display: block;");
         } else {
-            noFilesDiv.setAttribute("style", "display: block;");
-            hasFilesDiv.setAttribute("style", "display: none;");
+            hasPDFFilesDiv.setAttribute("style", "display: none;");
+        }
+
+        let hasHTMLFilesDiv = document.getElementById("has-html-files");
+        if(doc.htmlFiles.length > 0) {
+            hasHTMLFilesDiv.setAttribute("style", "display: block;");
+        } else {
+            hasHTMLFilesDiv.setAttribute("style", "display: none;");
         }
     }, logError);
 }, logError);
 
-document.getElementById("download-files").addEventListener("click", () => {
+document.getElementById("download-pdf-files").addEventListener("click", () => {
     for (let i = 0; i < doc.pdfFiles.length; i++) {
         browser.runtime.sendMessage({
             subject: "add-download",
@@ -48,4 +50,12 @@ document.getElementById("download-files").addEventListener("click", () => {
             }
         });
     }
+});
+
+document.getElementById("download-html").addEventListener("click", () => {
+   browser.tabs.create({
+       active: false,
+       openerTabId: activeTab.id,
+       url: "/html-aggregator/document.html"
+   });
 });
