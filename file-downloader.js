@@ -1,3 +1,4 @@
+let maxSimultaneous = 1;
 let interval = 15 / 600; // 15 minutes to download 600 files
 browser.alarms.create({ periodInMinutes: interval });
 
@@ -6,7 +7,7 @@ let itemsToDownload = [];
 function download(item) {
     browser.downloads.download({
         url: item.url,
-        filename: item.filename,
+        filename: "TriTun/" + item.filename,
         conflictAction: "overwrite",
         saveAs: false
     }).catch(function (error) {
@@ -17,7 +18,7 @@ function download(item) {
 function ensureQuotaRunning() {
     let searching = browser.downloads.search({ state: "in_progress" });
     searching.then((downloadsInProgress) => {
-        if(downloadsInProgress.length < 1) {
+        if(downloadsInProgress.length < maxSimultaneous && itemsToDownload.length > 0) {
             download(itemsToDownload.pop());
         }
     });

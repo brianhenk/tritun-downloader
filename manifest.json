@@ -7,27 +7,29 @@
 
   "applications": {
     "gecko": {
-      "strict_min_version": "59.0"
+      "strict_min_version": "58.0"
     }
   },
 
   "permissions": [
     "https://www.tritun.net/tritun/*",
     "downloads",
-    "activeTab",
+    "tabs",
     "alarms"
   ],
 
   "background": {
-    "scripts": [ "background.js" ]
+    "scripts": [
+      "controller.js",
+      "file-downloader.js"
+    ]
   },
 
   "page_action": {
     "browser_style": true,
     "default_icon": "page-action/download.svg",
     "default_title": "Download All",
-    "default_popup": "page-action/popup.html",
-    "show_matches": ["https://www.tritun.net/tritun/content/document/view*"]
+    "default_popup": "page-action/popup.html"
   },
 
   "content_scripts": [

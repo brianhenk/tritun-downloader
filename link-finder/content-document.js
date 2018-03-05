@@ -1,7 +1,9 @@
 browser.runtime.onMessage.addListener((message, sender, response) => {
     if(message.subject === "find-title") {
-        let documentName = document.querySelector("h2").textContent.trim();
-        response(documentName);
+        response({
+            title: document.querySelector("h2").textContent.trim(),
+            vehicle: document.querySelectorAll("ul.breadcrumb li")[1].textContent.trim()
+        });
     }
 });
 
