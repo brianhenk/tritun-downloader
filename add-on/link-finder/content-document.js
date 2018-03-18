@@ -11,10 +11,10 @@ browser.runtime.onMessage.addListener((message, sender, response) => {
     if(message.subject === "find-files") {
         let documentFrame = document.getElementById("documentViewContent");
         if(documentFrame != null) {
-            let viewerUrl = new URL(documentFrame.getAttribute("src"), "https://www.tritun.net");
+            let viewerUrl = new URL(documentFrame.getAttribute("src"), location.protocol + "//" + location.host);
 
             if (viewerUrl.toString().includes("/tritun/content/document/pdf/web/viewer")) {
-                let pdfUrl = new URL(viewerUrl.searchParams.get("pdfUrl"), "https://www.tritun.net");
+                let pdfUrl = new URL(viewerUrl.searchParams.get("pdfUrl"), location.protocol + "//" + location.host);
                 response([{
                     type: "pdf",
                     url: pdfUrl.toString(),

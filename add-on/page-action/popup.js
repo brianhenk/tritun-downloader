@@ -31,12 +31,13 @@ browser.tabs.query({active: true}).then((tabs) => {
             hasPDFFilesDiv.setAttribute("style", "display: none;");
         }
 
-        let hasHTMLFilesDiv = document.getElementById("has-html-files");
-        if(doc.htmlFiles.length > 0) {
-            hasHTMLFilesDiv.setAttribute("style", "display: block;");
-        } else {
-            hasHTMLFilesDiv.setAttribute("style", "display: none;");
-        }
+        // WIP
+        // let hasHTMLFilesDiv = document.getElementById("has-html-files");
+        // if(doc.htmlFiles.length > 0) {
+        //     hasHTMLFilesDiv.setAttribute("style", "display: block;");
+        // } else {
+        //     hasHTMLFilesDiv.setAttribute("style", "display: none;");
+        // }
     }, logError);
 }, logError);
 

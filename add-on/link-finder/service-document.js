@@ -20,10 +20,10 @@ function getProcedures(procedureItem) {
 }
 
 function getResource(procedureItem) {
-    let viewerUrl = new URL(getLink(procedureItem).getAttribute("href"), "https://www.tritun.net");
+    let viewerUrl = new URL(getLink(procedureItem).getAttribute("href"), location.protocol + "//" + location.host);
     let pdfParam = viewerUrl.searchParams.get("pdfUrl");
     if(pdfParam != null) {
-        return { "type": "pdf", "url": new URL(pdfParam, "https://www.tritun.net").toString() };
+        return { "type": "pdf", "url": new URL(pdfParam, location.protocol + "//" + location.host).toString() };
     } else {
         return { "type": "html", "url": viewerUrl.toString() };
     }

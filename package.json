@@ -1,0 +1,23 @@
+{
+  "name": "tritun-downloader",
+  "version": "1.0.0",
+  "description": "Firefox add-on that allows you to download all files displayed on a TriTun page.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianhenk/tritun-downloader.git"
+  },
+  "author": "Brian Henk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brianhenk/tritun-downloader/issues"
+  },
+  "homepage": "https://github.com/brianhenk/tritun-downloader#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.5.0",
+    "gulp-zip": "^4.1.0"
+  },
+  "dependencies": {
+    "npm": "^5.7.1"
+  }
+}
