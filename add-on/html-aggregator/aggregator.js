@@ -5,6 +5,13 @@ browser.tabs.getCurrent().then((currentTab) => {
     }).then((doc) => {
         let titleElement = document.getElementById("doc-title");
         titleElement.textContent = doc.title;
+        document.title = doc.title;
+
+        document.getElementById("count-found").textContent = doc.htmlFiles.length;
+        let countDoneSpan = document.getElementById("count-done");
+
+        let loadingDiv = document.getElementById("doc-loading");
+        let contentDiv = document.getElementById("doc-content");
 
         let previousProcedures = [];
         for(let i = 0; i < doc.htmlFiles.length; i++) {
@@ -20,7 +27,7 @@ browser.tabs.getCurrent().then((currentTab) => {
                     if (previousProcedures[procedureLevel] !== file.procedures[procedureLevel]) {
                         let header = document.createElement("h" + headerLevel);
                         header.textContent = file.procedures[procedureLevel];
-                        document.body.appendChild(header);
+                        contentDiv.appendChild(header);
                         lowestHeader = header;
                     }
                 }
@@ -74,7 +81,20 @@ browser.tabs.getCurrent().then((currentTab) => {
                     }
 
                     lowestHeader.insertAdjacentHTML('afterend', tempDoc.body.innerHTML);
+                    countDoneSpan.textContent = parseInt(countDoneSpan.textContent) + 1;
                 });
+
+                if(i >= doc.htmlFiles.length - 1) {
+                    loadingDiv.setAttribute("style", "display:none;");
+                    contentDiv.setAttribute("style", "");
+                    browser.tabs.saveAsPDF({
+                        showBackgroundColors: true,
+                        headerLeft: "",
+                        headerRight: "",
+                        footerLeft: "&T",
+                        footerRight: "&PT"
+                    });
+                }
             }, 1500 * i);
         }
     });

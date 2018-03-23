@@ -54,7 +54,7 @@ document.getElementById("download-pdf-files").addEventListener("click", () => {
 
 document.getElementById("download-html").addEventListener("click", () => {
    browser.tabs.create({
-       active: false,
+       active: true,
        openerTabId: activeTab.id,
        url: "/html-aggregator/document.html"
    });
