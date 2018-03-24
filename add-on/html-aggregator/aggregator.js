@@ -80,7 +80,7 @@ browser.tabs.getCurrent().then((currentTab) => {
                         let headers = fileDoc.querySelectorAll("h" + headerLevel);
                         for (let header of headers) {
                             let newHeader = fileDoc.createElement("h" + (lowestHeaderLevel + headerLevel - 1));
-                            newHeader.innerHTML = header.innerHTML;
+                            while (header.hasChildNodes()) newHeader.appendChild(header.firstChild);
                             header.insertAdjacentElement('afterend', newHeader);
                             header.remove();
                         }
@@ -89,7 +89,7 @@ browser.tabs.getCurrent().then((currentTab) => {
                     // Remove internal links
                     let links = fileDoc.querySelectorAll("a");
                     for (let link of links) {
-                        link.insertAdjacentHTML('afterend', link.innerHTML);
+                        while (link.firstChild) link.parentNode.insertBefore(link.firstChild, link);
                         link.remove();
                     }
 
@@ -119,7 +119,7 @@ browser.tabs.getCurrent().then((currentTab) => {
                         image.setAttribute("src", new URL(src, "https://www.tritun.net").toString());
                     }
 
-                    lowestHeader.insertAdjacentHTML('afterend', fileDoc.body.innerHTML);
+                    while (fileDoc.body.hasChildNodes()) contentDiv.appendChild(fileDoc.body.firstChild);
                     incrementProgress(filesCount, 1);
                 });
 
