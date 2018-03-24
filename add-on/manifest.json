@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "TriTun Downloader",
   "author": "Brian Henk",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Allows you to download all files displayed on a TriTun page.",
 
   "applications": {
