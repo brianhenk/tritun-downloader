@@ -9,8 +9,11 @@
     <body style="padding: 5px 20px 10px;">
         <h1 id="doc-title"></h1>
         <div id="doc-loading">
-            <div class="spinner"></div>
-            Loading <span id="count-done">0</span> of <span id="count-found">?</span>...
+            <div id="loading-bar">
+                <div id="progress"></div>
+            </div>
+            <p><span id="count-done">0</span> of <span id="count-found">?</span> (<span id="percent-done">?</span>%)</p>
+            <p><span id="mins-remaining">?</span> minutes remaining.</p>
         </div>
         <div id="doc-content" style="display:none;">
 

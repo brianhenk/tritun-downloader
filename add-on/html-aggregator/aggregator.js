@@ -7,8 +7,13 @@ browser.tabs.getCurrent().then((currentTab) => {
         titleElement.textContent = doc.title;
         document.title = doc.title;
 
-        document.getElementById("count-found").textContent = doc.htmlFiles.length;
+        let countFoundSpan = document.getElementById("count-found");
+        countFoundSpan.textContent = doc.htmlFiles.length;
+
+        let progressDiv = document.getElementById("progress");
         let countDoneSpan = document.getElementById("count-done");
+        let percentDoneSpan = document.getElementById("percent-done");
+        let minsRemainingSpan = document.getElementById("mins-remaining");
 
         let loadingDiv = document.getElementById("doc-loading");
         let contentDiv = document.getElementById("doc-content");
@@ -34,7 +39,7 @@ browser.tabs.getCurrent().then((currentTab) => {
                 previousProcedures = file.procedures;
 
                 // Fetch content
-                fetch(file.url).then((response) => {
+                fetch(file.url, {credentials: "include"}).then((response) => {
                     return response.text();
                 }).then((text) => {
                     let tempDoc = new DOMParser().parseFromString(text, "text/html");
@@ -73,6 +78,15 @@ browser.tabs.getCurrent().then((currentTab) => {
                         svgDiv.remove();
                     }
 
+                    // Replace IMG objects with images
+                    let imgSections = tempDoc.querySelectorAll("section.img-pan-zoom");
+                    for (let imgSection of imgSections) {
+                        let img = imgSection.querySelector("img");
+                        img.setAttribute("src", new URL(img.getAttribute("src"), "https://www.tritun.net").toString());
+                        imgSection.insertAdjacentElement("afterend", img);
+                        imgSection.remove();
+                    }
+
                     // Change images to absolute urls
                     let images = tempDoc.querySelectorAll("img");
                     for (let image of images) {
@@ -82,6 +96,9 @@ browser.tabs.getCurrent().then((currentTab) => {
 
                     lowestHeader.insertAdjacentHTML('afterend', tempDoc.body.innerHTML);
                     countDoneSpan.textContent = parseInt(countDoneSpan.textContent) + 1;
+                    percentDoneSpan.textContent = ((parseFloat(countDoneSpan.textContent) / parseFloat(countFoundSpan.textContent)) * 100).toFixed(0);
+                    progressDiv.style.width = percentDoneSpan.textContent + "%";
+                    minsRemainingSpan.textContent = ((parseInt(countFoundSpan.textContent) - parseInt(countDoneSpan.textContent)) * 1800 / 1000 / 60).toFixed(1);
                 });
 
                 if(i >= doc.htmlFiles.length - 1) {
