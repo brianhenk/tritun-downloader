@@ -2,17 +2,20 @@ function logError(error) {
     console.log(`Error: ${error}`);
 }
 
-function filterSlashes(str) {
-    return str.replace('/', '');
+function filterSpecialChars(str) {
+    return str.replace('/', '')
+              .replace('>','_')
+              .replace('<','_')
+              .replace('\\','');
 }
 
 function getPDFFilename(vehicle, title, procedures, order, count) {
-    let filename = filterSlashes(vehicle);
-    filename = filename + "/" + filterSlashes(title);
+    let filename = filterSpecialChars(vehicle);
+    filename = filename + "/" + filterSpecialChars(title);
     if(count > 1) {
         filename = filename + "/" + (order + 1).toString().padStart(3, "0");
         for (let procedure of procedures) {
-            filename = filename + " - " + filterSlashes(procedure);
+            filename = filename + " - " + filterSpecialChars(procedure);
         }
     }
     filename = filename + ".pdf";
