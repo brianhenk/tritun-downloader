@@ -13,11 +13,11 @@
   },
   "homepage": "https://github.com/brianhenk/tritun-downloader#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-connect": "^5.5.0",
-    "gulp-zip": "^4.1.0"
+    "gulp-zip": "^5.1.0"
   },
   "dependencies": {
-    "npm": "^5.7.1"
+    "npm": "^8.12.1"
   }
 }
